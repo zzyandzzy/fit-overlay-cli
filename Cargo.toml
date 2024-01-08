@@ -1,0 +1,19 @@
+[package]
+name = "fit-overlay-cli"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+thiserror = "1.0"
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+fit-rust = "0.1.8"
+clap = { version = "4", features = ["derive"] }
+ffmpeg-sidecar = "0.5.1"
+image = "0.24.7"
+threadpool = "1.8"
+thread_local = "1.1.7"
+charming = { path = "libs/charming/charming", features = ["ssr"] }
