@@ -10,7 +10,7 @@
 
 - 使用 [echarts](https://github.com/apache/echarts)，支持自定义图表，更多图表样式请看：[echarts examples](https://echarts.apache.org/examples/zh/index.html)
 - 支持自定义数据、支持使用JavaScript控制每一帧的状态。如正常的时候显示上面所示图片，功率或者速度大于最大值的80%时显示为：
-![80%](./imgs/80%.png)
+![80](./imgs/80.png)
 
 对应`set_option.js`为：
 ```javascript
