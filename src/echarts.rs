@@ -34,9 +34,15 @@ impl Echarts {
             .replace("${right_balance}", &format!("{}", record.rb))
             .replace("${timestamp}", &format!("{}", record.t));
 
-        self.render
+        match self
+            .render
             .render_format_script(ImageFormat::Png, set_option_js)
-            .expect("TODO: panic message")
+        {
+            Ok(image) => image,
+            Err(e) => {
+                panic!("Echart err: {:?}", e);
+            }
+        }
     }
 }
 
