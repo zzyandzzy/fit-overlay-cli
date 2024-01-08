@@ -40,9 +40,11 @@ jobs:
     strategy:
       matrix:
         build: [
-          x86_64-linux-gnu, x86_64-linux-musl, aarch64-linux-gnu, aarch64-linux-musl,
-          x86_64-apple-darwin, aarch64-apple-darwin,
-          x86_64-pc-windows-msvc, x86_64-pc-windows-gnu, aarch64-pc-windows-msvc,
+#          x86_64-linux-gnu,
+          x86_64-linux-musl,
+#          aarch64-linux-gnu, aarch64-linux-musl,
+#          x86_64-apple-darwin, aarch64-apple-darwin,
+#          x86_64-pc-windows-msvc, x86_64-pc-windows-gnu, aarch64-pc-windows-msvc,
         ]
         include:
           # Linux (x86_64 & aarch64)
