@@ -109,6 +109,7 @@ fn main() -> anyhow::Result<()> {
             generate_video(args)?;
         }
         Commands::Ffmpeg(ffmpeg) => {
+            ffmpeg_sidecar::download::auto_download().unwrap();
             print_to_screen(ffmpeg.args);
         }
     }
