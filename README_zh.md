@@ -4,9 +4,20 @@
 
 `fit-overlay-cli` 是一个可以将fit的数据导出为叠加层视频的工具。
 
+![normal](./imgs/normal.png)
+
 ## 功能
 
 - 使用 [echarts](https://github.com/apache/echarts)，支持自定义图表，更多图表样式请看：[echarts examples](https://echarts.apache.org/examples/zh/index.html)
+- 支持自定义数据、支持使用JavaScript控制每一帧的状态。如正常的时候显示上面所示图片，功率或者速度大于最大值的80%时显示为：
+![80%](./imgs/80%.png)
+
+对应`set_option.js`为：
+```javascript
+powerColor = ${power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+speedColor = ${speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+```
+
 - 使用 [FFmpeg](https://github.com/FFmpeg/FFmpeg)，支持硬件加速导出，使用命令`./fit-overlay-cli ffmpeg --args -encoders`查看
 
 ## 安装

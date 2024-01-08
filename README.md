@@ -4,9 +4,19 @@
 
 `fit-overlay-cli` is a tool that can export fit data into overlay video.
 
+![normal](./imgs/normal.png)
+
 ## Features
 
 - Use [echarts](https://github.com/apache/echarts)，support custom charts. For more chart styles, please see：[echarts examples](https://echarts.apache.org/examples/en/index.html)
+- It supports custom data and the use of Java Script to control the state of each frame. Display the picture shown above as normal, when the power or speed is greater than 80% of the maximum value, it is displayed as：
+  ![80%](./imgs/80%.png)
+
+This code `set_option.js`：
+```javascript
+powerColor = ${power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+speedColor = ${speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+```
 - Use [FFmpeg](https://github.com/FFmpeg/FFmpeg)，support hardware accelerated export，use command `./fit-overlay-cli ffmpeg --args -encoders`see more.
 
 ## Installation
@@ -42,6 +52,7 @@ Apple M2 output:
 # For more details of the order, please check
 ./fit-overlay-cli --help
 ```
+
 
 ## License
 
