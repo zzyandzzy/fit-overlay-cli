@@ -64,7 +64,7 @@ pub struct GenArgs {
     pub start_timestamp: Option<u32>,
 
     /// input fit delay
-    #[arg(short, long, allow_hyphen_values = true)]
+    #[arg(long, allow_hyphen_values = true)]
     pub delay: Option<i32>,
 }
 
@@ -90,7 +90,7 @@ pub struct VideoArgs {
     pub height: u32,
 
     /// output video duration second
-    #[arg(long, default_value_t = 10)]
+    #[arg(short, long, default_value_t = 10)]
     pub duration: u32,
 
     /// output video path

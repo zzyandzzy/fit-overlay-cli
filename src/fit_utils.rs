@@ -53,7 +53,9 @@ pub fn filter_data(args: FilterDataArgs) -> anyhow::Result<Vec<FitRecord>> {
     let fit_file = fs::read(args.fit_path).expect("fit file not found.");
     let fit = Fit::read(fit_file)?;
     let mut vec: Vec<Vec<DataField>> = Vec::new();
-    let start_timestamp = args.start_timestamp.unwrap_or_else(|| 0);
+    let start_timestamp = args
+        .start_timestamp
+        .unwrap_or_else(|| get_first_record(&fit.data));
     let start_timestamp = match args.delay {
         None => start_timestamp,
         Some(delay) => add_u32_i32(start_timestamp, delay),
@@ -181,7 +183,33 @@ pub fn filter_data(args: FilterDataArgs) -> anyhow::Result<Vec<FitRecord>> {
         })
     }
     if record_vec.len() != duration as usize {
-        panic!("record vec not equal {}:{duration}", record_vec.len());
+        let len = duration - record_vec.len() as u32;
+        let last_record = record_vec.last().expect("Can pop empty vec!").clone();
+        for _ in 0..len {
+            record_vec.push(last_record.clone());
+        }
     }
     Ok(record_vec)
+}
+
+fn get_first_record(fit_data: &Vec<FitMessage>) -> u32 {
+    for message in fit_data {
+        match message {
+            FitMessage::Definition(_) => {}
+            FitMessage::Data(msg) => match msg.data.message_type {
+                MessageType::Record => {
+                    for item in &msg.data.values {
+                        match item.field_num {
+                            253 => {
+                                return item.value.clone().into();
+                            }
+                            _ => {}
+                        }
+                    }
+                }
+                _ => {}
+            },
+        }
+    }
+    0
 }

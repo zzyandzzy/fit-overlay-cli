@@ -15,6 +15,15 @@ Download [fit-overlay-cli](https://github.com/zzyandzzy/fit-overlay-cli/releases
 
 ## Usage
 
+1. First install [FFmpeg](https://github.com/FFmpeg/FFmpeg) or run this command.
+
+```shell
+# This command will first download and unzip FFmpeg to the current folder.
+./fit-overlay-cli ffmpeg --args -version
+```
+
+2. Run.
+
 ```shell
 # Generate a video with a timestamp greater than or equal to 1696483082 to 1696483112(1696483082+30) seconds according to tests.fit
 # The --delay parameter indicates that the time difference between the data recorded by fit and the video recording is 17 seconds.

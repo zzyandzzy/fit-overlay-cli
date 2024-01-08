@@ -491,7 +491,7 @@ checksum = "a5b56b7872b0cbc828e83043a82268b111e3648dab25f29079fce448648e572a"
 
 [[package]]
 name = "fit-overlay-cli"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "charming",

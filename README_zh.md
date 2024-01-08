@@ -15,6 +15,16 @@
 
 ## 使用
 
+
+1.首先安装[FFmpeg](https://github.com/FFmpeg/FFmpeg)或者运行下面的命令
+
+```shell
+# 该命令会首先下载并解压FFmpeg到当前文件夹。
+./fit-overlay-cli ffmpeg --args -version
+```
+
+2. 运行
+
 ```shell
 # 根据tests.fit生成一段时间戳大于等于1696483082到1696483112(1696483082+30)秒的视频
 # --delay参数表示fit记录的数据和视频记录的时间差距为17秒
