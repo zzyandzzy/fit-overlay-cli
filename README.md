@@ -9,7 +9,7 @@
 ## Features
 
 - Use [echarts](https://github.com/apache/echarts)，support custom charts. For more chart styles, please see：[echarts examples](https://echarts.apache.org/examples/en/index.html)
-- It supports custom data and the use of Java Script to control the state of each frame. Display the picture shown above as normal, when the power or speed is greater than 80% of the maximum value, it is displayed as：
+- It supports custom data and the use of JavaScript to control the state of each frame. Display the picture shown above as normal, when the power or speed is greater than 80% of the maximum value, it is displayed as：
   ![80](./imgs/80.png)
 
 This code `set_option.js`：
