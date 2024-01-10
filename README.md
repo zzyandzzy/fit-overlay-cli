@@ -14,8 +14,8 @@
 
 This code `set_option.js`：
 ```javascript
-powerColor = ${power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
-speedColor = ${speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+powerColor = {power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+speedColor = {speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
 ```
 - Use [FFmpeg](https://github.com/FFmpeg/FFmpeg)，support hardware accelerated export，use command `./fit-overlay-cli ffmpeg --args -encoders`see more.
 

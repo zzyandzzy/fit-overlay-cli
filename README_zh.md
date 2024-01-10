@@ -14,8 +14,8 @@
 
 对应`set_option.js`为：
 ```javascript
-powerColor = ${power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
-speedColor = ${speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+powerColor = {power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+speedColor = {speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
 ```
 
 - 使用 [FFmpeg](https://github.com/FFmpeg/FFmpeg)，支持硬件加速导出，使用命令`./fit-overlay-cli ffmpeg --args -encoders`查看

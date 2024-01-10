@@ -1,5 +1,5 @@
-const chartWidth = ${width};
-const chartHeight = ${height};
+const chartWidth = {width};
+const chartHeight = {height};
 
 var chart = echarts.init(null, null, {
     renderer: 'svg',
@@ -12,15 +12,15 @@ function autoFontSize(scale) {
     return Math.round(chartWidth / scale);
 }
 
-const data = ${all_record};
-const pathData = data.map(item => [item.lo, item.la]);
-const altData = data.map(item => [item.t, item.a]);
+const allRecordData = {all_record};
+const allPathData = allRecordData.map(item => [item.lo, item.la]);
+const allAltData = allRecordData.map(item => [item.t, item.a]);
 let maxSpeed = 0;
 let maxPower = 0;
 let maxAlt = 0;
 let minAlt = 8848.43;
-for (let i = 0; i < data.length; i++) {
-    const item = data[i];
+for (let i = 0; i < allRecordData.length; i++) {
+    const item = allRecordData[i];
     if (item.p > maxPower) {
         maxPower = item.p;
     }
@@ -92,7 +92,7 @@ chart.setOption(
             {
                 name: 'Path',
                 type: 'line',
-                data: pathData,
+                data: allPathData,
                 showSymbol: false,
                 animation: false,
                 lineStyle: {
@@ -105,8 +105,8 @@ chart.setOption(
                 type: 'effectScatter',
                 coordinateSystem: 'cartesian2d',
                 z: 100,
-                data: [pathData[0]],
-                symbolSize: autoFontSize(150),
+                data: [allPathData[0]],
+                symbolSize: autoFontSize(100),
                 showEffectOn: 'render',
                 rippleEffect: {
                     brushType: 'stroke'
@@ -116,7 +116,7 @@ chart.setOption(
                 }
             },
             {
-                data: altData,
+                data: allAltData,
                 type: 'line',
                 itemStyle: {
                     color: 'white'
@@ -136,8 +136,8 @@ chart.setOption(
                 type: 'effectScatter',
                 coordinateSystem: 'cartesian2d',
                 z: 100,
-                data: [altData[0]],
-                symbolSize: autoFontSize(150),
+                data: [allAltData[0]],
+                symbolSize: autoFontSize(100),
                 showEffectOn: 'render',
                 rippleEffect: {
                     brushType: 'stroke'

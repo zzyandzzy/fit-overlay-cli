@@ -4,44 +4,26 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .video-container {
-            position: relative;
-            width: 1920px;
-            height: 1080px;
-            background-color: black;
-        }
-
-        video {
-            position: relative;
-            z-index: 1;
-        }
-
-        #echart1 {
+        #my-chart {
             position: absolute;
             top: 0;
             left: 0;
             width: 1920px;
             height: 1080px;
             z-index: 2;
+            background-color: black;
         }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
-<div class="video-container">
-    <!--    <video autoplay loop>-->
-    <!--        <source src="../video/h264.mp4" type="video/mp4">-->
-    <!--        Your browser does not support the video tag.-->
-    <!--    </video>-->
-    <div id="echart1"></div>
-</div>
+<div id="my-chart"></div>
 
 <script>
     fetch('../record_data.json')
         .then(response => response.json())
         .then(data => {
-            // 使用数据创建 ECharts 图表
             createChart(data);
         });
 
@@ -67,17 +49,15 @@
             }
         }
 
-        const pathData = data.map(item => [item.lo, item.la]);
-        const altData = data.map(item => [item.t, item.a]);
+        const allPathData = data.map(item => [item.lo, item.la]);
+        const allAltData = data.map(item => [item.t, item.a]);
 
-        // 创建 ECharts 实例并设置选项...
-        var echartContainer = document.getElementById('echart1');
-        var myChart = echarts.init(echartContainer, null, {renderer: 'svg'});
+        const echartContainer = document.getElementById('my-chart');
+        const myChart = echarts.init(echartContainer, null, {renderer: 'svg'});
 
         function autoFontSize(scale) {
             let width = echartContainer.offsetWidth;
             let newFontSize = Math.round(width / scale);
-            // console.log(`Current width : ${width}, Updating Fontsize to ${newFontSize}`);
             return newFontSize;
         }
 
@@ -140,7 +120,7 @@
                     {
                         name: 'Path',
                         type: 'line',
-                        data: pathData,
+                        data: allPathData,
                         lineStyle: {
                             width: autoFontSize(300),
                             color: "white",
@@ -155,8 +135,8 @@
                         type: 'effectScatter',
                         coordinateSystem: 'cartesian2d',
                         z: 100,
-                        data: [pathData[0]],
-                        symbolSize: autoFontSize(150),
+                        data: [allPathData[0]],
+                        symbolSize: autoFontSize(100),
                         showEffectOn: 'render',
                         rippleEffect: {
                             brushType: 'stroke'
@@ -166,7 +146,7 @@
                         },
                     },
                     {
-                        data: altData,
+                        data: allAltData,
                         type: 'line',
                         itemStyle: {
                             color: 'white'
@@ -186,8 +166,8 @@
                         type: 'effectScatter',
                         coordinateSystem: 'cartesian2d',
                         z: 100,
-                        data: [altData[0]],
-                        symbolSize: autoFontSize(150),
+                        data: [allAltData[0]],
+                        symbolSize: autoFontSize(100),
                         showEffectOn: 'render',
                         rippleEffect: {
                             brushType: 'stroke'
@@ -442,10 +422,8 @@
                 ]
             });
 
-
-        // 动态更新小球位置
         setInterval(function () {
-            if (currentIndex < pathData.length) {
+            if (currentIndex < allPathData.length) {
                 let item = data[currentIndex];
                 let powerColor = item.p > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
                 let speedColor = item.s > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
@@ -463,20 +441,16 @@
                                 text: item.c,
                             }
                         },
-                        {
-                            // style: {
-                            //     text: (-item.c).toFixed(2) + '%',
-                            // }
-                        },
+                        {},
                     ],
                     series: [
                         {},
                         {
-                            data: [pathData[currentIndex]]
+                            data: [allPathData[currentIndex]]
                         },
                         {},
                         {
-                            data: [altData[currentIndex]]
+                            data: [allAltData[currentIndex]]
                         },
                         {
                             axisTick: {

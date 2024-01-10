@@ -1,6 +1,7 @@
 use crate::fit_utils::FitRecord;
 use charming::ImageRenderer;
 use image::{ImageFormat, RgbaImage};
+use std::collections::HashMap;
 
 pub struct Echarts {
     render: ImageRenderer,
@@ -20,19 +21,25 @@ impl Echarts {
     }
 
     pub fn render_format(&mut self, record: FitRecord) -> RgbaImage {
-        let set_option_js = self
-            .set_option_js
-            .replace("${long}", &format!("{}", record.lo))
-            .replace("${lat}", &format!("{}", record.la))
-            .replace("${alt}", &format!("{}", record.a))
-            .replace("${heart}", &format!("{}", record.h))
-            .replace("${cadence}", &format!("{}", record.c))
-            .replace("${speed}", &format!("{}", record.s))
-            .replace("${power}", &format!("{}", record.p))
-            .replace("${grade}", &format!("{}", record.g))
-            .replace("${temperature}", &format!("{}", record.te))
-            .replace("${right_balance}", &format!("{}", record.rb))
-            .replace("${timestamp}", &format!("{}", record.t));
+        let replacements = HashMap::from([
+            ("{long}", record.lo.to_string()),
+            ("{lat}", record.la.to_string()),
+            ("{alt}", record.a.to_string()),
+            ("{heart}", record.h.to_string()),
+            ("{cadence}", record.c.to_string()),
+            ("{speed}", record.s.to_string()),
+            ("{power}", record.p.to_string()),
+            ("{grade}", record.g.to_string()),
+            ("{temperature}", record.te.to_string()),
+            ("{right_balance}", record.rb.to_string()),
+            ("{timestamp}", record.t.to_string()),
+        ]);
+
+        let set_option_js = replacements
+            .iter()
+            .fold(self.set_option_js.clone(), |acc, (key, value)| {
+                acc.replace(key, value)
+            });
 
         match self
             .render
@@ -54,9 +61,9 @@ pub fn replace_chart_js(
 ) -> String {
     chart_js
         .replace(
-            "${all_record}",
+            "{all_record}",
             &serde_json::to_string(fit_record_slice).unwrap(),
         )
-        .replace("${width}", &width.to_string())
-        .replace("${height}", &height.to_string())
+        .replace("{width}", &width.to_string())
+        .replace("{height}", &height.to_string())
 }

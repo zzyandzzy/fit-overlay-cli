@@ -1,33 +1,33 @@
-powerColor = ${power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
-speedColor = ${speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+powerColor = {power} > (maxPower * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
+speedColor = {speed} > (maxSpeed * 0.8) ? 'rgb(255, 70, 131)' : '#58D9F9';
 chart.setOption({
     graphic: [
         {},
         {
             style: {
-                text: ${heart}
+                text: {heart}
             }
         },
         {},
         {
             style: {
-                text: ${cadence},
+                text: {cadence},
             }
         },
         {
             style: {
-                text: (${grade}).toFixed(2) + '%',
+                text: ({grade}).toFixed(2) + '%',
             }
         },
     ],
     series: [
         {},
         {
-            data: [[${long},${lat}]]
+            data: [[{long}, {lat}]]
         },
         {},
         {
-            data: [[${timestamp},${alt}]]
+            data: [[{timestamp}, {alt}]]
         },
         {
             axisTick: {
@@ -54,7 +54,7 @@ chart.setOption({
             },
             data: [
                 {
-                    value: ${speed},
+                    value: {speed},
                     name: 'km/h'
                 }
             ]
@@ -81,7 +81,7 @@ chart.setOption({
             },
             data: [
                 {
-                    value: ${power}
+                    value: {power}
                 }
             ]
         }
