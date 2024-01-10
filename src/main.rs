@@ -4,7 +4,6 @@ use crate::frame::NumberedFrame;
 use clap::{Args, Parser, Subcommand};
 use ffmpeg_sidecar::command::FfmpegCommand;
 use ffmpeg_sidecar::event::{FfmpegEvent, LogLevel};
-use image::RgbaImage;
 use std::cell::RefCell;
 use std::collections::BinaryHeap;
 use std::io::{Read, Write};
@@ -30,7 +29,7 @@ thread_local! {
 #[command(version, author, about, long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
-    pub command: Commands,
+    command: Commands,
 }
 
 #[derive(Subcommand, Debug)]
@@ -249,7 +248,7 @@ fn producer(
                         *echarts = Some(Echarts::new(chart_js, set_option_js, width, height));
                     }
                     let echarts_instance = echarts.as_mut().unwrap();
-                    let image: RgbaImage = echarts_instance.render_format(tmp_record);
+                    let image = echarts_instance.render_format(tmp_record);
                     let num_frame = NumberedFrame {
                         frame_num: frame_index,
                         image,
@@ -284,7 +283,7 @@ fn consumer(
                 let numbered_frame = heap.pop().unwrap();
                 heap_size.store(heap.len(), Ordering::Relaxed);
                 current_frame_num = current_frame_num + 1;
-                let f = numbered_frame.image.into_raw();
+                let f = numbered_frame.image;
                 stdin
                     .write(&f)
                     .expect("Failed to write frame data to stdin");

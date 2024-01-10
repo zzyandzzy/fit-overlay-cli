@@ -1,11 +1,13 @@
 use crate::fit_utils::FitRecord;
 use charming::ImageRenderer;
-use image::{ImageFormat, RgbaImage};
-use std::collections::HashMap;
+use resvg::tiny_skia;
+use usvg::{fontdb, TreeParsing, TreeTextToPath};
 
 pub struct Echarts {
     render: ImageRenderer,
     set_option_js: String,
+    fontdb: fontdb::Database,
+    opt: usvg::Options,
 }
 
 impl Echarts {
@@ -13,43 +15,58 @@ impl Echarts {
         let mut renderer = ImageRenderer::new(width, height);
         let _init = renderer
             .execute_script(chart_js)
-            .expect("TODO: panic message");
+            .expect("Echart new error.");
+
+        let mut fontdb = fontdb::Database::new();
+        fontdb.load_system_fonts();
+        let opt = usvg::Options::default();
         Self {
             render: renderer,
             set_option_js,
+            fontdb,
+            opt,
         }
     }
 
-    pub fn render_format(&mut self, record: FitRecord) -> RgbaImage {
-        let replacements = HashMap::from([
-            ("{long}", record.lo.to_string()),
-            ("{lat}", record.la.to_string()),
-            ("{alt}", record.a.to_string()),
-            ("{heart}", record.h.to_string()),
-            ("{cadence}", record.c.to_string()),
-            ("{speed}", record.s.to_string()),
-            ("{power}", record.p.to_string()),
-            ("{grade}", record.g.to_string()),
-            ("{temperature}", record.te.to_string()),
-            ("{right_balance}", record.rb.to_string()),
-            ("{timestamp}", record.t.to_string()),
-        ]);
+    pub fn render_format(&mut self, record: FitRecord) -> Vec<u8> {
+        let svg = self.render_format_str(record);
+        self.svg_to_png(&svg)
+    }
 
-        let set_option_js = replacements
-            .iter()
-            .fold(self.set_option_js.clone(), |acc, (key, value)| {
-                acc.replace(key, value)
-            });
+    pub fn render_format_str(&mut self, record: FitRecord) -> String {
+        let set_option_js = self
+            .set_option_js
+            .replace("{long}", &format!("{}", record.lo))
+            .replace("{lat}", &format!("{}", record.la))
+            .replace("{alt}", &format!("{}", record.a))
+            .replace("{heart}", &format!("{}", record.h))
+            .replace("{cadence}", &format!("{}", record.c))
+            .replace("{speed}", &format!("{}", record.s))
+            .replace("{power}", &format!("{}", record.p))
+            .replace("{grade}", &format!("{}", record.g))
+            .replace("{temperature}", &format!("{}", record.te))
+            .replace("{right_balance}", &format!("{}", record.rb))
+            .replace("{timestamp}", &format!("{}", record.t));
 
-        match self
-            .render
-            .render_format_script(ImageFormat::Png, set_option_js)
-        {
-            Ok(image) => image,
-            Err(e) => {
-                panic!("Echart err: {:?}", e);
-            }
-        }
+        self.render
+            .execute_script(set_option_js)
+            .unwrap_or_else(|e| panic!("Echart render format str err: {:?}", e))
+    }
+
+    fn svg_to_png(&mut self, svg_str: &str) -> Vec<u8> {
+        let rtree = {
+            let mut tree = usvg::Tree::from_str(svg_str, &self.opt)
+                .unwrap_or_else(|e| panic!("Echart init tree error: {e}"));
+            tree.convert_text(&self.fontdb);
+            resvg::Tree::from_usvg(&tree)
+        };
+
+        let pixmap_size = rtree.size.to_int_size();
+        let mut pixmap = tiny_skia::Pixmap::new(pixmap_size.width(), pixmap_size.height())
+            .expect("Echart init pixmap error.");
+        rtree.render(tiny_skia::Transform::default(), &mut pixmap.as_mut());
+        // RgbaImage::from_vec(pixmap.width(), pixmap.height(), pixmap.take())
+        pixmap.take()
     }
 }
 
