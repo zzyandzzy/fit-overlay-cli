@@ -93,12 +93,14 @@ chart.setOption(
                 name: 'Path',
                 type: 'line',
                 data: allPathData,
-                showSymbol: false,
-                animation: false,
                 lineStyle: {
                     width: autoFontSize(300),
-                    color: 'white'
-                }
+                    color: "white",
+                },
+                showSymbol: false,
+                animation: false,
+                xAxisIndex: 0,
+                yAxisIndex: 0,
             },
             {
                 name: 'Ball',
@@ -113,7 +115,7 @@ chart.setOption(
                 },
                 itemStyle: {
                     color: '#58D9F9'
-                }
+                },
             },
             {
                 data: allAltData,
@@ -220,6 +222,7 @@ chart.setOption(
                     distance: autoFontSize(100),
                     color: "#58D9F9",
                     fontSize: autoFontSize(100),
+                    fontWeight: 'bold',
                     formatter: function (value) {
                         return value.toFixed(0);
                     }
@@ -237,7 +240,7 @@ chart.setOption(
                     height: 20,
                     offsetCenter: [
                         0,
-                        "-20%"
+                        "-25%"
                     ],
                     valueAnimation: true,
                     fontSize: autoFontSize(50),
@@ -257,7 +260,7 @@ chart.setOption(
             {
                 type: 'gauge',
                 center: ['50%', '90%'],
-                radius: "25%",
+                radius: "20%",
                 startAngle: 200,
                 endAngle: -20,
                 min: 0,
@@ -297,8 +300,8 @@ chart.setOption(
                 axisLabel: {
                     distance: -autoFontSize(48),
                     color: '#58D9F9',
-                    fontWeight: 'bold',
                     fontSize: autoFontSize(75),
+                    fontWeight: 'bold',
                     formatter: function (value) {
                         return value.toFixed(0);
                     }

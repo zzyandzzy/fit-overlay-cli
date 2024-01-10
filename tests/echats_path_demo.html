@@ -53,6 +53,7 @@
         const allAltData = data.map(item => [item.t, item.a]);
 
         const echartContainer = document.getElementById('my-chart');
+        let chartHeight = echartContainer.offsetHeight;
         const myChart = echarts.init(echartContainer, null, {renderer: 'svg'});
 
         function autoFontSize(scale) {
@@ -250,6 +251,7 @@
                             distance: autoFontSize(100),
                             color: "#58D9F9",
                             fontSize: autoFontSize(100),
+                            fontWeight: 'bold',
                             formatter: function (value) {
                                 return value.toFixed(0);
                             }
@@ -359,7 +361,7 @@
                     {
                         type: 'text',
                         left: '15px',
-                        top: echartContainer.offsetHeight / 2 - autoFontSize(24) - autoFontSize(75),
+                        top: chartHeight / 2 - autoFontSize(24) - autoFontSize(75),
                         style: {
                             text: 'BPM',
                             fill: 'rgba(255,255,255,0.8)',
@@ -372,7 +374,7 @@
                     {
                         type: 'text',
                         left: '10px',
-                        top: echartContainer.offsetHeight / 2 - autoFontSize(24),
+                        top: chartHeight / 2 - autoFontSize(24),
                         style: {
                             text: '0',
                             fill: 'rgba(255,255,255)',
@@ -381,11 +383,10 @@
                             textVerticalAlign: 'middle'
                         }
                     },
-
                     {
                         type: 'text',
                         left: '15px',
-                        top: echartContainer.offsetHeight / 2 + autoFontSize(24) - autoFontSize(75),
+                        top: chartHeight / 2 + autoFontSize(24) - autoFontSize(75),
                         style: {
                             text: 'RPM',
                             fill: 'rgba(255,255,255,0.8)',
@@ -398,7 +399,7 @@
                     {
                         type: 'text',
                         left: '10px',
-                        top: echartContainer.offsetHeight / 2 + autoFontSize(24),
+                        top: chartHeight / 2 + autoFontSize(24),
                         style: {
                             text: '0',
                             fill: 'rgba(255,255,255)',
@@ -410,7 +411,7 @@
                     {
                         type: 'text',
                         left: autoFontSize(48) + 'px',
-                        top: echartContainer.offsetHeight - autoFontSize(32) - echartContainer.offsetHeight / 16,
+                        top: chartHeight - autoFontSize(32) - chartHeight / 16,
                         style: {
                             text: '-49.99%',
                             fill: 'rgba(255,255,255)',
