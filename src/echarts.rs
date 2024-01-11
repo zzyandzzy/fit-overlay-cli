@@ -41,6 +41,7 @@ impl Echarts {
             .replace("{alt}", &format!("{}", record.a))
             .replace("{heart}", &format!("{}", record.h))
             .replace("{cadence}", &format!("{}", record.c))
+            .replace("{distance}", &format!("{}", record.d))
             .replace("{speed}", &format!("{}", record.s))
             .replace("{power}", &format!("{}", record.p))
             .replace("{grade}", &format!("{}", record.g))
