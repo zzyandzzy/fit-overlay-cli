@@ -54,7 +54,7 @@ impl Echarts {
             .unwrap_or_else(|e| panic!("Echart render format str err: {:?}", e))
     }
 
-    fn svg_to_png(&mut self, svg_str: &str) -> Vec<u8> {
+    pub fn svg_to_png(&mut self, svg_str: &str) -> Vec<u8> {
         let rtree = {
             let mut tree = usvg::Tree::from_str(svg_str, &self.opt)
                 .unwrap_or_else(|e| panic!("Echart init tree error: {e}"));
@@ -66,7 +66,6 @@ impl Echarts {
         let mut pixmap = tiny_skia::Pixmap::new(pixmap_size.width(), pixmap_size.height())
             .expect("Echart init pixmap error.");
         rtree.render(tiny_skia::Transform::default(), &mut pixmap.as_mut());
-        // RgbaImage::from_vec(pixmap.width(), pixmap.height(), pixmap.take())
         pixmap.take()
     }
 }

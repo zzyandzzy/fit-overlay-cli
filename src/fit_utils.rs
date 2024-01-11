@@ -35,10 +35,10 @@ pub struct FitRecord {
 
 #[derive(Clone, Debug)]
 pub struct FilterDataArgs {
-    pub(crate) fit_path: String,
-    pub(crate) start_timestamp: Option<u32>,
-    pub(crate) delay: Option<i32>,
-    pub(crate) duration: u32,
+    pub fit_path: String,
+    pub start_timestamp: Option<u32>,
+    pub delay: Option<i32>,
+    pub duration: u32,
 }
 
 fn add_u32_i32(u: u32, i: i32) -> u32 {

@@ -1,9 +1,10 @@
-use crate::echarts::Echarts;
-use crate::fit_utils::{FilterDataArgs, FitRecord};
-use crate::frame::NumberedFrame;
 use clap::{Args, Parser, Subcommand};
 use ffmpeg_sidecar::command::FfmpegCommand;
 use ffmpeg_sidecar::event::{FfmpegEvent, LogLevel};
+use fit_overlay_cli::echarts::Echarts;
+use fit_overlay_cli::fit_utils::{FilterDataArgs, FitRecord};
+use fit_overlay_cli::frame::NumberedFrame;
+use fit_overlay_cli::{echarts, fit_utils, interpolation};
 use std::cell::RefCell;
 use std::collections::BinaryHeap;
 use std::io::{Read, Write};
@@ -14,12 +15,6 @@ use std::sync::Arc;
 use std::time::Duration;
 use std::{fs, thread};
 use threadpool::ThreadPool;
-
-mod echarts;
-mod errors;
-mod fit_utils;
-mod frame;
-mod interpolation;
 
 thread_local! {
     static ECHARTS_INSTANCE: RefCell<Option<Echarts>> = RefCell::new(None);

@@ -1,6 +1,6 @@
 pub struct NumberedFrame {
-    pub(crate) frame_num: u32,
-    pub(crate) image: Vec<u8>,
+    pub frame_num: u32,
+    pub image: Vec<u8>,
 }
 
 // 实现 Eq。因为 NumberedFrame 需要能够作为一个二进制堆的元素，

@@ -20,3 +20,8 @@ charming = { path = "libs/charming/charming", features = ["ssr"] }
 # svg
 resvg = { version = "0.37.0" }
 usvg = { version = "0.37.0" }
+
+[[bin]]
+name = "fit-overlay-cli"
+path = "src/bin/main.rs"
+required-features = []
