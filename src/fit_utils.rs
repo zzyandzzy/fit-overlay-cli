@@ -142,6 +142,9 @@ pub fn filter_data(args: FilterDataArgs) -> anyhow::Result<Vec<FitRecord>> {
                 _ => {}
             }
         }
+        if power == u16::MAX {
+            power = 0;
+        }
         let alt = alt as f32 / 5.0 - 500.0;
         let grade = prev_values.map_or(0.0, |fields| {
             let (prev_alt, prev_distance) =
