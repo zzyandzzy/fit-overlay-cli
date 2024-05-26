@@ -12,10 +12,10 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 fit-rust = "0.1.8"
 clap = { version = "4", features = ["derive"] }
-ffmpeg-sidecar = "0.5.1"
-image = "0.24.7"
+ffmpeg-sidecar = "1.1.0"
+image = "0.25.1"
 threadpool = "1.8"
-thread_local = "1.1.7"
+thread_local = "1"
 charming = { path = "libs/charming/charming", features = ["ssr"] }
 # svg
 resvg = { version = "0.37.0" }
