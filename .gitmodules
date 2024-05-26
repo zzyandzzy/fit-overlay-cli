@@ -1,3 +1,6 @@
 [submodule "libs/charming"]
 	path = libs/charming
 	url = https://github.com/zzyandzzy/charming
+[submodule "crates/charming"]
+	path = crates/charming
+	url = https://github.com/zzyandzzy/charming

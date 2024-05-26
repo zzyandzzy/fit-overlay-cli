@@ -16,7 +16,7 @@ ffmpeg-sidecar = "1.1.0"
 image = "0.25.1"
 threadpool = "1.8"
 thread_local = "1"
-charming = { path = "libs/charming/charming", features = ["ssr"] }
+charming = { path = "crates/charming/charming", features = ["ssr"] }
 # svg
 resvg = { version = "0.37.0" }
 usvg = { version = "0.37.0" }
