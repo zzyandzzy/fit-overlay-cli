@@ -18,8 +18,8 @@ threadpool = "1.8"
 thread_local = "1"
 charming = { path = "crates/charming/charming", features = ["ssr"] }
 # svg
-resvg = { version = "0.37.0" }
-usvg = { version = "0.37.0" }
+resvg = { version = "0.44.0" }
+usvg = { version = "0.44.0" }
 
 [[bin]]
 name = "fit-overlay-cli"

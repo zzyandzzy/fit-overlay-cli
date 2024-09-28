@@ -1,13 +1,14 @@
+use std::sync::Arc;
+
 use crate::fit_utils::FitRecord;
 use charming::ImageRenderer;
 use resvg::tiny_skia;
-use usvg::{fontdb, TreeParsing, TreeTextToPath};
+use usvg::fontdb;
 
 pub struct Echarts {
     render: ImageRenderer,
     set_option_js: String,
-    fontdb: fontdb::Database,
-    opt: usvg::Options,
+    opt: usvg::Options<'static>,
 }
 
 impl Echarts {
@@ -19,11 +20,13 @@ impl Echarts {
 
         let mut fontdb = fontdb::Database::new();
         fontdb.load_system_fonts();
-        let opt = usvg::Options::default();
+        let opt = usvg::Options {
+            fontdb: Arc::new(fontdb),
+            ..Default::default()
+        };
         Self {
             render: renderer,
             set_option_js,
-            fontdb,
             opt,
         }
     }
@@ -56,16 +59,18 @@ impl Echarts {
 
     pub fn svg_to_png(&mut self, svg_str: &str) -> Vec<u8> {
         let rtree = {
-            let mut tree = usvg::Tree::from_str(svg_str, &self.opt)
-                .unwrap_or_else(|e| panic!("Echart init tree error: {e}"));
-            tree.convert_text(&self.fontdb);
-            resvg::Tree::from_usvg(&tree)
+            usvg::Tree::from_str(svg_str, &self.opt)
+                .unwrap_or_else(|e| panic!("Echart init tree error: {e}"))
         };
 
-        let pixmap_size = rtree.size.to_int_size();
+        let pixmap_size = rtree.size().to_int_size();
         let mut pixmap = tiny_skia::Pixmap::new(pixmap_size.width(), pixmap_size.height())
             .expect("Echart init pixmap error.");
-        rtree.render(tiny_skia::Transform::default(), &mut pixmap.as_mut());
+        resvg::render(
+            &rtree,
+            tiny_skia::Transform::default(),
+            &mut pixmap.as_mut(),
+        );
         pixmap.take()
     }
 }
